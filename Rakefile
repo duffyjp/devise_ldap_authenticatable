@@ -40,11 +40,11 @@ begin
     gemspec.name = "devise_ldap_authenticatable"
     gemspec.summary = "LDAP authentication module for Devise"
     gemspec.description = "LDAP authentication module for Devise"
-    gemspec.email = "curtis.schiewek@gmail.com"
-    gemspec.homepage = "http://github.com/cschiewek/devise_ldap_authenticatable"
-    gemspec.authors = ["Curtis Schiewek", "Daniel McNevin"]
-    gemspec.add_runtime_dependency "devise", "1.1.2"
-    gemspec.add_runtime_dependency "net-ldap", "0.1.1"
+    gemspec.email = "curtis.schiewek@gmail.com anton.versal@gmail.com"
+    gemspec.homepage = "http://github.com/antonversal/devise_ldap_authenticatable"
+    gemspec.authors = ["Curtis Schiewek", "Daniel McNevin", "Anton Versal"]
+    gemspec.add_runtime_dependency "devise", ">= 1.2.1"
+    gemspec.add_runtime_dependency "net-ldap", ">= 0.2.2"
   end
   Jeweler::GemcutterTasks.new
 rescue LoadError
