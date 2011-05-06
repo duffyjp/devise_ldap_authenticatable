@@ -7,9 +7,16 @@ If you are building applications for use within your organization which require 
 
 For a screencast with an example application, please visit: [http://random-rails.blogspot.com/2010/07/ldap-authentication-with-devise.html](http://random-rails.blogspot.com/2010/07/ldap-authentication-with-devise.html)
 
-**_Please Note_**
 
-If you are using rails 2.x then use 0.1.x series of gem, and see the rails2 branch README for instructions.
+**_This Fork_**
+
+This is a custom fork which modifies the model.rb file to extract a user's email and save it into the local db.  It also updates the gemspec requirements to allow you to use a modern devise version.  Please don't use this in your important project.  It may not behave as you would expect.
+
+
+
+
+
+
 
 Requirements
 ------------
@@ -19,8 +26,8 @@ Requirements
 
 These gems are dependencies of the gem:
 
-- Devise 1.1.2
-- net-ldap 0.1.1
+- Devise >= 1.2.1
+- net-ldap >= 0.2.2
 
 Installation
 ------------
@@ -31,12 +38,12 @@ This will *only* work for Rails 3 applications.
 
 In the Gemfile for your application:
 
-    gem "devise", "1.1.2"
+    gem "devise", "1.2.1"  # (testing with 1.3.4)
     gem "devise_ldap_authenticatable"
     
 To get the latest version, pull directly from github instead of the gem:
 
-    gem "devise_ldap_authenticatable", :git => "git://github.com/cschiewek/devise_ldap_authenticatable.git"
+    gem "devise_ldap_authenticatable", :git => "git://github.com/duffyjp/devise_ldap_authenticatable.git"
 
 
 Setup

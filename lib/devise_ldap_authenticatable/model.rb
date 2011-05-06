@@ -45,10 +45,6 @@ module Devise
       def ldap_groups
         Devise::LdapAdapter.get_groups(login_with)
       end
-      
-      def ldap_dn
-        Devise::LdapAdapter.get_dn(login_with)
-      end
 
       module ClassMethods
         # Authenticate a user based on configured attribute keys. Returns the
@@ -56,9 +52,9 @@ module Devise
         def authenticate_with_ldap(attributes={}) 
           @login_with = ::Devise.authentication_keys.first
           return nil unless attributes[@login_with].present? 
-          
+
           # resource = find_for_ldap_authentication(conditions)
-          resource = where(@login_with => attributes[@login_with]).first
+          resource = scoped.where(@login_with => attributes[@login_with]).first
                     
           if (resource.blank? and ::Devise.ldap_create_user)
             resource = new
@@ -67,7 +63,22 @@ module Devise
           end
                     
           if resource.try(:valid_ldap_authentication?, attributes[:password])
-            resource.save if resource.new_record?
+
+            config     = YAML.load(ERB.new(File.read("#{Rails.root}/config/ldap.yml")).result)[Rails.env]
+            ldap      = Net::LDAP.new
+            ldap.host = config['host']
+            ldap.port = config['port']
+            ldap.base = config['base']
+            filter    = Net::LDAP::Filter.eq(config['attribute'], attributes[@login_with])
+            ldap.encryption(:simple_tls) if config['ssl'] == true
+
+            ldap.search(:filter => filter) do |entry|
+              resource.email = entry.mail.first
+            end
+
+
+
+            resource.save #if resource.new_record?
             return resource
           else
             return nil
