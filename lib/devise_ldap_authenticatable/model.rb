@@ -73,7 +73,7 @@ module Devise
             ldap.encryption(:simple_tls) if config['ssl'] == true
 
             ldap.search(:filter => filter) do |entry|
-              resource.email = entry.mail.first
+              resource.email = entry.mail.first.downcase
             end
 
 
